@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <title>Carte du parcours de running - Stade municipal</title>
+  <style>
+    #map {
+      height: 500px;
+      width: 100%;
+    }
+  </style>
+</head>
+<body>
+  <h2>Itinéraire de course autour du stade municipal</h2>
+  <div id="map"></div>
+
+  <!-- Intégration de l'API Google Maps -->
+  <script
+    src="https://maps.googleapis.com/maps/api/js?key=AIzaSyA7Y32T_PJHZxYcK3BJYJFNwSl6cuvLXpo&callback=initMap&v=weekly"
+    defer>
+  </script>
+
+  <script>
+    function initMap() {
+      const centreCarte = { lat: 48.958356, lng: 2.548828 };
+
+      const pointsParcours = [
+        { lat: 48.9556, lng: 2.5339 },
+        { lat: 48.9560, lng: 2.5345 },
+        { lat: 48.9565, lng: 2.5338 },
+        { lat: 48.9560, lng: 2.5330 },
+        { lat: 48.9556, lng: 2.5339 }
+      ];
+
+      const map = new google.maps.Map(document.getElementById("map"), {
+        zoom: 15,
+        center: centreCarte,
+      });
+
+      pointsParcours.forEach((coord, i) => {
+        new google.maps.Marker({
+          position: coord,
+          map,
+          title: `Point ${i + 1}`,
+        });
+      });
+
+      const traceParcours = new google.maps.Polyline({
+        path: pointsParcours,
+        geodesic: true,
+        strokeColor: "#FF0000",
+        strokeOpacity: 1.0,
+        strokeWeight: 3,
+      });
+
+      traceParcours.setMap(map);
+    }
+
+    window.initMap = initMap;
+  </script>
+</body>
+</html>

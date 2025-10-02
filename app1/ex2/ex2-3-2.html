@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>JRostand Stade Repères</title>
+    <link rel="stylesheet" type="text/css" href="./style.css" />
+    <style>
+        #map {
+            height: 500px;
+            width: 100%;
+        }
+    </style>
+</head>
+<body>
+
+<h1>JRostand Repères Stade</h1>
+<hr>
+<div id="map"></div>
+
+<!-- API Google Maps -->
+
+<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyA7Y32T_PJHZxYcK3BJYJFNwSl6cuvLXpo"></script>
+
+<!-- jQuery -->
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+
+<script>
+    var markers = [];
+
+    // Chargement des données GPS via Ajax
+    function loadDoc() {
+        $.ajax({
+            url: "markersJrostand.json",
+            method: "GET",
+            dataType: "json",
+            success: function(dataMarkers) {
+                markers = dataMarkers;
+                console.log("Coordonnées GPS chargées :", markers);
+                initMap();
+            },
+            error: function(xhr, status, error) {
+                console.error("Erreur lors du chargement des données JSON :", error);
+            }
+        });
+    }
+
+    // Initialisation de la carte Google Maps
+    function initMap() {
+        var options = {
+            center: new google.maps.LatLng(48.95930033308523, 2.5477890651742516), // Stade de Villepinte
+            zoom: 15,
+            mapTypeId: google.maps.MapTypeId.ROADMAP
+        };
+
+        var map = new google.maps.Map(document.getElementById("map"), options);
+
+        var pathCoordinates = []; // pour stocker les points GPS du parcours
+
+        // Ajout des marqueurs sur la carte
+        for (let i = 0; i < markers.length; i++) {
+            let latlng = new google.maps.LatLng(markers[i].lat, markers[i].lng);
+            new google.maps.Marker({
+                position: latlng,
+                map: map
+            });
+            pathCoordinates.push(latlng); // on ajoute aussi au chemin
+        }
+
+        // Création de la polyline reliant les points
+        var polyline = new google.maps.Polyline({
+            path: pathCoordinates,
+            geodesic: true,
+            strokeColor: "#FF0000",
+            strokeOpacity: 1.0,
+            strokeWeight: 3
+        });
+
+        polyline.setMap(map);
+    }
+
+    // Lancement du chargement des données au démarrage
+    window.onload = loadDoc;
+</script>
+
+</body>
+</html>
