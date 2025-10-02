@@ -224,18 +224,18 @@
    }
 ]`;
 
-   var i;
-   document.getElementById("Button1").addEventListener('click',readTab);
-
    function readTab(){
-       for (let i=0; i<CDs.length; i++) {
-         cd= CDs[i]
-         for(key in cd){
-            console.log(key +":"+ cd[key]);
-         }
-       }
+  var CDstab = JSON.parse(CDs);  // transforme la string JSON en tableau JS
 
-   }
+  for (var i = 0; i < CDstab.length; i++) {
+    console.log("CD[" + i + "]=");
+    var cd = CDstab[i];
+
+    for (var cle in cd) {
+      console.log(cle + ": " + cd[cle]);
+    }
+  }
+}
 
 </script>
 

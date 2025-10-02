@@ -26,15 +26,17 @@
                 `
     
     var i;
-	document.getElementById("Button1").addEventListener('click',readTab);
+    document.getElementById("Button1").addEventListener('click',readTab);
 
-	function readTab() {
-  		var cd = JSON.parse(CD);   
-  		for (const cle in cd) {    
-    		console.log(cle + " : " + cd[cle]);  
+    function readTab(){
+        let text="";
+        for (const i in CD){
+            text = i+ ":"+ CD[i];
+            console.log(text)
         }
         
     }
+        
   
 </script>
 
