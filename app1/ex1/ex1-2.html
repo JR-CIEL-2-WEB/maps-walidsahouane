@@ -1,19 +1,19 @@
 <!DOCTYPE html >
 <html>
-   <head>
-      <meta charset="utf-8">
-      <title>Parcourir un tableau indicé</title>
-   </head>
+	<head>
+		<meta charset="utf-8">
+		<title>Parcourir un tableau indicé</title>
+	</head>
 <body>
 
 <h1>Tableau associatif en javascript</h1>
 <hr>
 <div id="demo">
-   <button id = "Button1"> ok </button>
+	<button id = "Button1"> ok </button>
 </div>
 
 <script type="text/javascript">
-   var CDs = JSON.parse`[
+	var CDs = JSON.parse( `[
    {
       "TITLE": "Empire Burlesque",
       "ARTIST": "Bob Dylan",
@@ -222,21 +222,22 @@
       "PRICE": "8.20",
       "YEAR": "1987"
    }
-]`;
+]`);
 
-   function readTab(){
-  var CDstab = JSON.parse(CDs);  // transforme la string JSON en tableau JS
+	var i;
+	document.getElementById("Button1").addEventListener('click',readTab);
 
-  for (var i = 0; i < CDstab.length; i++) {
-    console.log("CD[" + i + "]=");
-    var cd = CDstab[i];
+	function readTab(){
+		let text = ""
+		for  (i =0; i <CDs.length; i++) {
+            let cd = CDs[i]
+            text += `CD[${i}] =` + "\n"
 
-    for (var cle in cd) {
-      console.log(cle + ": " + cd[cle]);
-    }
-  }
-}
-
+         for(key in cd){
+            text +=  key +  ":" + cd[key] + "\n";
+         }}
+		console.log(text)		
+	}
 </script>
 
 </body>

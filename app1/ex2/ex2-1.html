@@ -19,46 +19,26 @@
       https://developers.google.com/maps/documentation/javascript/load-maps-js-api
       for more information.
       -->
-  <html>
-  <head>
-    <title>Ex2-1 - Map centrée sur le lycée</title>
-    <link rel="stylesheet" type="text/css" href="./style.css" />
-    <script type="module" src="./index.js"></script>
-  </head>
+  <script
+    src="https://maps.googleapis.com/maps/api/js?key=AIzaSyA7Y32T_PJHZxYcK3BJYJFNwSl6cuvLXpo&callback=initMap&v=weekly"
+    defer></script>
+  <script>
+    function initMap() {
+      const myLatLng = { lat: 48.95838, lng: 2.54705 };
+      const map = new google.maps.Map(document.getElementById("map"), {
+        zoom: 4,
+        center: myLatLng,
+      });
 
-  <body>
-    <div id="map" style="height: 500px; width: 100%;"></div>
+      new google.maps.Marker({
+        position: myLatLng,
+        map,
+        title: "Hello World!",
+      });
+    }
 
-```
-<script
-  src="https://maps.googleapis.com/maps/api/js?key=AIzaSyA7Y32T_PJHZxYcK3BJYJFNwSl6cuvLXpo&callback=initMap&v=weekly"
-  defer>
-</script>
-
-<script>
-  function initMap() {
-
-    const lyceeCoords = { lat: 48.958356, lng: 2.548828 };
-
-    const map = new google.maps.Map(document.getElementById("map"), {
-      zoom: 15,
-      center: lyceeCoords,
-    });
-
-    new google.maps.Marker({
-      position: lyceeCoords,
-      map,
-      title: "Lycée Jean Rostand",
-    });
-  }
-
-  window.initMap = initMap;
-</script>
-```
-
-  </body>
-</html>
-
+    window.initMap = initMap;
+  </script>
 </body>
 
 </html>

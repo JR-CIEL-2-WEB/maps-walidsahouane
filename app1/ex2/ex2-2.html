@@ -1,62 +1,43 @@
 <!DOCTYPE html>
-<html lang="fr">
+<html>
 <head>
-  <meta charset="UTF-8" />
-  <title>Carte du parcours de running - Stade municipal</title>
-  <style>
-    #map {
-      height: 500px;
-      width: 100%;
-    }
-  </style>
+  <meta charset="utf-8">
+  <title>Stade avec plusieurs markers</title>
+  <link rel="stylesheet" type="text/css" href="./style.css" />
 </head>
 <body>
-  <h2>Itinéraire de course autour du stade municipal</h2>
+  <h1>Stade Municipal - Plusieurs markers</h1>
   <div id="map"></div>
 
-  <!-- Intégration de l'API Google Maps -->
-  <script
-    src="https://maps.googleapis.com/maps/api/js?key=AIzaSyA7Y32T_PJHZxYcK3BJYJFNwSl6cuvLXpo&callback=initMap&v=weekly"
-    defer>
-  </script>
+  <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyA7Y32T_PJHZxYcK3BJYJFNwSl6cuvLXpo&callback=initMap" defer></script>
 
   <script>
-    function initMap() {
-      const centreCarte = { lat: 48.958356, lng: 2.548828 };
+    function initMap(){
+       var options = {
+           center: new google.maps.LatLng(48.95930033308523, 2.5477890651742516),
+           zoom: 15,
+           mapTypeId: google.maps.MapTypeId.ROADMAP
+       };
 
-      const pointsParcours = [
-        { lat: 48.9556, lng: 2.5339 },
-        { lat: 48.9560, lng: 2.5345 },
-        { lat: 48.9565, lng: 2.5338 },
-        { lat: 48.9560, lng: 2.5330 },
-        { lat: 48.9556, lng: 2.5339 }
-      ];
+       var map = new google.maps.Map(document.getElementById("map"), options);
 
-      const map = new google.maps.Map(document.getElementById("map"), {
-        zoom: 15,
-        center: centreCarte,
-      });
+       var markers = [
+         {lat: 48.95930033308523, lng: 2.5477890651742516, title: "Point 1"},
+         {lat: 48.95901659236071, lng: 2.544364368005043, title: "Point 2"},
+         {lat: 48.96083250510581, lng: 2.5428194730675138, title: "Point 3"},
+         {lat: 48.96334006261106, lng: 2.5503223316267305, title: "Point 4"},
+         {lat: 48.96146800531762, lng: 2.553135524155863, title: "Point 5"},
+         {lat: 48.95997156116078, lng: 2.548567662388221, title: "Point 6"}
+       ];
 
-      pointsParcours.forEach((coord, i) => {
-        new google.maps.Marker({
-          position: coord,
-          map,
-          title: `Point ${i + 1}`,
-        });
-      });
-
-      const traceParcours = new google.maps.Polyline({
-        path: pointsParcours,
-        geodesic: true,
-        strokeColor: "#FF0000",
-        strokeOpacity: 1.0,
-        strokeWeight: 3,
-      });
-
-      traceParcours.setMap(map);
+       markers.forEach(function(markerData){
+           new google.maps.Marker({
+               position: {lat: markerData.lat, lng: markerData.lng},
+               map: map,
+               title: markerData.title
+           });
+       });
     }
-
-    window.initMap = initMap;
   </script>
 </body>
 </html>

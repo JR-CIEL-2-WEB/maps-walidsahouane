@@ -18,25 +18,42 @@
 
 	// Ajax avec JQuery
 	function loadDoc() {
+
 		$.ajax({
-					url: "?",
-					method: "?",
-					dataType: "?",
+					url: "cd_catalog.json",
+					method: "GET",
+					dataType: "json",
 					success: function(CDs){
-						/* CDs representera un objet JSON retourné par le serveur */
-						/* compléter le code de la fonction afin d'afficher les CD de CDs à la console */
-						/* vous utiliserez deux boucles for
-							- boucle for classique sur CDs
-							- boucle for in sur CD
-						 */
+
+
+						text= "";
+						for  (i =0; i <CDs.length; i++) {
+            				let cd = CDs[i]
+            				text += `CD[${i}] =` + "\n"
+
+         					for(key in cd){
+            					text +=  key +  ":" + cd[key] + "\n";
+         					}
+							
+						
+						}
+						console.log(text + "\n")
+
+					
+				
+
+
 					}
+					
+					
 				}
-		);
-		  //console.log("ok");
+				
+			);
+		  console.log("ok");
 	};
 
 
 </script>
 
 </body>
-</html>
+</html
