@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>Stade avec plusieurs markers</title>
+  <link rel="stylesheet" type="text/css" href="./style.css" />
+</head>
+<body>
+  <h1>Stade Municipal - Plusieurs markers</h1>
+  <div id="map"></div>
+
+  <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyA7Y32T_PJHZxYcK3BJYJFNwSl6cuvLXpo&callback=initMap" defer></script>
+
+  <script>
+    function initMap(){
+       var options = {
+           center: new google.maps.LatLng(48.95930033308523, 2.5477890651742516),
+           zoom: 15,
+           mapTypeId: google.maps.MapTypeId.ROADMAP
+       };
+
+       var map = new google.maps.Map(document.getElementById("map"), options);
+
+       var markers = [
+         {lat: 48.95930033308523, lng: 2.5477890651742516, title: "Point 1"},
+         {lat: 48.95901659236071, lng: 2.544364368005043, title: "Point 2"},
+         {lat: 48.96083250510581, lng: 2.5428194730675138, title: "Point 3"},
+         {lat: 48.96334006261106, lng: 2.5503223316267305, title: "Point 4"},
+         {lat: 48.96146800531762, lng: 2.553135524155863, title: "Point 5"},
+         {lat: 48.95997156116078, lng: 2.548567662388221, title: "Point 6"}
+       ];
+
+       markers.forEach(function(markerData){
+           new google.maps.Marker({
+               position: {lat: markerData.lat, lng: markerData.lng},
+               map: map,
+               title: markerData.title
+           });
+       });
+    }
+  </script>
+</body>
+</html>

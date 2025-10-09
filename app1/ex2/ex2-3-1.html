@@ -1,74 +1,75 @@
-<!DOCTYPE html >
+<!DOCTYPE html>
 <html>
 <head>
     <meta charset="utf-8">
-    <title>JRostand stade reperes</title>
+    <title>JRostand Stade Repères</title>
     <link rel="stylesheet" type="text/css" href="./style.css" />
+    <style>
+        /* Assure que la carte s'affiche correctement */
+        #map {
+            height: 500px;
+            width: 100%;
+        }
+    </style>
 </head>
 <body>
 
-<h1>JRostand Reperes Stade</h1>
+<h1>JRostand Repères Stade</h1>
 <hr>
-<div id="map">...</div>
+<div id="map"></div>
 
-<script   src="https://maps.googleapis.com/maps/api/js?key=AIzaSyA7Y32T_PJHZxYcK3BJYJFNwSl6cuvLXpo&callback=initMap"></script>
-<script  src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<!-- API Google Maps -->
+<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyA7Y32T_PJHZxYcK3BJYJFNwSl6cuvLXpo"></script>
+<!-- jQuery -->
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+
 <script>
+    var markers = [];
 
-    // au chargement de la page
-    //window.onload = loadDoc();
-    // when page is ready, initialize the map!
-    google.maps.event.addDomListener(window, 'load', loadDoc());
-    var markers;
-
-    // Ajax avec JQuery
+    // Chargement des données GPS via Ajax
     function loadDoc() {
         $.ajax({
-                url: "markersJrostand.json",
-                method: "GET",
-                //data: { id : menuId },
-                dataType: "json",
-                success: function(dataMarkers){
-                            markers = dataMarkers;
-                            for(let i = 0; i < markers.length;i++){
-                                let marker = markers[i];
-                                for(key in markers[i]){
-                                    console.log(key + ":" + marker[key]);
-                                }
-                                console.log("____________");
-                            }
-                            initMap();
-                        }
+            url: "markersJrostand.json",
+            method: "GET",
+            dataType: "json",
+            success: function(dataMarkers) {
+                markers = dataMarkers;
+                console.log("Coordonnées GPS chargées :");
+                for (let i = 0; i < markers.length; i++) {
+                    let marker = markers[i];
+                    console.log("lat: " + marker.lat + ", lng: " + marker.lng);
+                }
+                initMap();
+            },
+            error: function(xhr, status, error) {
+                console.error("Erreur lors du chargement des données JSON :", error);
             }
-        );
+        });
     }
 
-   function initMap(){
-       var options = {
-           center: new google.maps.LatLng(48.95930033308523, 2.5477890651742516),
-           zoom: 15,
-           mapTypeId: google.maps.MapTypeId.ROADMAP
-       };
+    // Initialisation de la carte Google Maps
+    function initMap() {
+        var options = {
+            center: new google.maps.LatLng(48.95930033308523, 2.5477890651742516),
+            zoom: 15,
+            mapTypeId: google.maps.MapTypeId.ROADMAP
+        };
 
-       /*
-           Constructeur de la map qui prend en paramêtre le conteneur HTML
-           dans lequel la map doit s'afficher et les options
-       */
-       var map = new google.maps.Map(document.getElementById("map"), options);
+        var map = new google.maps.Map(document.getElementById("map"), options);
 
-       // On positionne les marqueurs sur la carte
-       for (let i = 0; i < markers.length; i++) {
-           let latlng = markers[i];
-           new google.maps.Marker({
-               position: latlng,
-               map : map
-           });
-       }
+        // Ajout des marqueurs sur la carte
+        for (let i = 0; i < markers.length; i++) {
+            let latlng = new google.maps.LatLng(markers[i].lat, markers[i].lng);
+            new google.maps.Marker({
+                position: latlng,
+                map: map
+            });
+        }
     }
 
-
+    // Lancement du chargement des données au démarrage
+    window.onload = loadDoc;
 </script>
-
 
 </body>
 </html>
