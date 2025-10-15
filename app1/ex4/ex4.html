@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>Carte Jean Rostand</title>
+    <style>
+        html, body {
+            height: 100%;
+            margin: 0;
+            padding: 0;
+            /* pas de font-family, police par défaut du navigateur */
+        }
+        h1 {
+            text-align: left;          /* Titre aligné à gauche */
+            margin: 15px 20px 5px 20px;
+            color: #000000;            /* Titre en noir */
+            font-size: 28px;
+        }
+        hr {
+            margin: 0 20px 10px 20px;
+            border: 1px solid #ccc;
+        }
+        #map {
+            height: 90vh;
+            width: 100%;
+        }
+    </style>
+</head>
+<body>
+
+<h1>Carte Jean Rostand</h1>
+<hr>
+<div id="map"></div>
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+<script async src="https://maps.googleapis.com/maps/api/js?key=AIzaSyA7Y32T_PJHZxYcK3BJYJFNwSl6cuvLXpo&callback=initMap"></script>
+
+<script>
+let map;
+let markersList = [];
+let polylinePoints = [];
+
+// Fonction principale pour charger les markers et afficher la carte
+async function initMap() {
+    let markersData;
+    try {
+        const response = await fetch('markersJrostand.json');
+        if (!response.ok) throw new Error(`Erreur HTTP: ${response.status}`);
+        markersData = await response.json();
+    } catch (err) {
+        console.error("Erreur lors du chargement du JSON :", err);
+        alert("Impossible de charger les données de la carte.");
+        return;
+    }
+
+    // Initialisation de la carte centrée sur le lycée
+    map = new google.maps.Map(document.getElementById("map"), {
+        center: { lat: 48.9593, lng: 2.5478 },
+        zoom: 15,
+        mapTypeId: 'roadmap'
+    });
+
+    const infoWindow = new google.maps.InfoWindow();
+    const bounds = new google.maps.LatLngBounds();
+
+    // Boucle pour créer les markers
+    markersData.forEach((item, index) => {
+        const position = { lat: item.lat, lng: item.lng };
+
+        const marker = new google.maps.Marker({
+            position,
+            map,
+            title: item.nom || `Point ${index+1}`
+        });
+
+        marker.addListener('click', () => {
+            alert(`Marker cliqué : ${item.nom || "Point " + (index+1)}\nLatitude: ${item.lat}\nLongitude: ${item.lng}`);
+            infoWindow.setContent(
+                `<strong>${item.nom || "Point " + (index+1)}</strong><br>` +
+                `${item.description || "Pas de description"}<br>` +
+                `<em>Latitude:</em> ${item.lat}<br>` +
+                `<em>Longitude:</em> ${item.lng}`
+            );
+            infoWindow.open(map, marker);
+        });
+
+        markersList.push(marker);
+        polylinePoints.push(position);
+        bounds.extend(position);
+    });
+
+    // Polyline rouge pour relier les points
+    if (polylinePoints.length > 1) {
+        const polyline = new google.maps.Polyline({
+            path: polylinePoints,
+            geodesic: true,
+            strokeColor: "#FF0000",
+            strokeOpacity: 1.0,
+            strokeWeight: 2
+        });
+        polyline.setMap(map);
+    }
+
+    // Ajuster la carte pour montrer tous les markers
+    map.fitBounds(bounds);
+}
+</script>
+
+</body>
+</html>
+
