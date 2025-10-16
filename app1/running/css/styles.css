@@ -1,0 +1,344 @@
+@import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;600;700&display=swap'); 
+
+/* Reset */
+*,
+*::before,
+*::after {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: 'Orbitron', serif;
+  background: #000000;
+  color: #fff;
+  overflow-x: hidden;
+}
+
+a {
+  text-decoration: none;
+  color: #fff;
+}
+
+.barre-annonce {
+  background-color: #251688;
+  color: white;
+  padding: 10px 0;
+  text-align: center;
+  font-size: 18px;
+  font-weight: bold;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: static;
+  top: 0;
+  width: 100%;
+  z-index: 1001;
+}
+
+.barre-annonce a {
+  color: white;
+  background-color: #6c349b;
+  padding: 5px 15px;
+  text-decoration: none;
+  border-radius: 5px;
+  margin-left: 10px;
+}
+
+.barre-annonce a:hover {
+  background-color: #004c99;
+}
+
+/* Header */
+header {
+  position: static;
+  top: 50px;
+  left: 0;
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px 30px;
+  background-color: transparent !important;
+  z-index: 1000;
+}
+
+header .logo img {
+  height: 80px;
+}
+
+header .desktop-main-menu ul {
+  display: flex;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+header .desktop-main-menu ul li {
+  margin: 0 15px;
+}
+
+header .desktop-main-menu ul li a {
+  font-size: 14px;
+  padding: 5px 10px;
+  color: #fff;
+  font-weight: bold;
+  transition: color 0.3s;
+}
+
+header .desktop-main-menu ul li a:hover {
+  color: #00f;
+}
+
+/* Sections */
+section {
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: flex-start; /* Alignement en haut de la section */
+  text-align: center;
+  position: relative;
+}
+
+h1, h2 {
+  font-style: italic;
+  margin: 0; /* Enlever la marge par défaut */
+}
+
+/* Position des titres h2 en haut à gauche */
+.section-b h2,
+.section-c h2,
+.section-d h2 {
+  position: absolute;
+  top: 20px;
+  left: 30px;
+  font-size: 2.5rem;
+  color: white;
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+}
+
+/* Section A */
+.section-a {
+  background: url('../img/backgroundsectionAnightrunning.webp') no-repeat center / cover;
+}
+
+.section-b {
+  background: rgb(0, 0, 0);
+  padding-top: 60px; /* Ajuste l'espace au-dessus */
+  padding-bottom: 40px; /* Ajuste l'espace en bas */
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: center;
+  text-align: center;
+  height: auto;
+  position: relative; /* Pour permettre au titre de se placer correctement */
+}
+
+.courses-container {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr); /* Deux colonnes */
+  gap: 20px;
+  width: 90%;
+  max-width: 1000px;
+  position: relative;
+  margin-top: -20px; /* Remonte les cartes vers le haut */
+}
+
+.course {
+  background: #000000;
+  padding: 10px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  text-align: center;
+  position: relative;
+  border-radius: 0; /* Enlève les coins arrondis */
+  border: 3px solid #3818b8; /* Contour bleu permanent */
+}
+
+.course img {
+  width: 100%;
+  height: 200px;
+  object-fit: cover;
+  margin-bottom: 15px;
+}
+
+.course-name {
+  font-size: 1.2rem;
+  font-weight: 500;
+  color: #3818b8;
+  margin-top: 10px;
+  text-transform: capitalize;
+}
+
+.course:hover {
+  transform: scale(1.05);
+}
+
+.course img:hover {
+  opacity: 0.8;
+}
+
+.section-c {
+  background: rgb(0, 0, 0);
+  padding-top: 60px; /* Espace pour le titre "Boutique" */
+  text-align: left;
+  height: 100vh; /* Prendre toute la hauteur de la section */
+  display: flex;
+  flex-direction: column;
+  justify-content: center; /* Centrer verticalement tout le contenu */
+  align-items: center; /* Centrer le contenu horizontalement */
+}
+
+.section-c h2 {
+  font-size: 2.5rem;
+  color: #fff;
+  margin-bottom: 30px; /* Espace sous le titre */
+  text-align: left;
+  margin-left: 30px;
+}
+
+.section-d {
+  background: url('../img/backgroundsectionCnightrunning.webp') no-repeat center / cover;
+  padding-top: 60px; /* Espace pour le titre "Boutique" */
+  text-align: left;
+  height: 100vh; /* Prendre toute la hauteur de la section */
+  display: flex;
+  flex-direction: column;
+  justify-content: center; /* Centrer verticalement tout le contenu */
+  align-items: center; /* Centrer le contenu horizontalement */
+}
+
+.section-d h2 {
+  font-size: 2.5rem;
+  color: #fff;
+  margin-bottom: 30px; /* Espace sous le titre */
+  text-align: left;
+  margin-left: 30px;
+}
+
+.product-container {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 30px; /* Espacement entre les produits */
+  justify-content: space-between; /* Espacement des produits */
+  width: 100%; /* Prend toute la largeur de la section */
+  padding: 0 30px; /* Ajout de padding pour espacer les bords */
+  box-sizing: border-box; /* Inclut les paddings dans la largeur totale */
+}
+
+.product {
+  background: #ffffff;
+  border-radius: 0; /* Coins pointus */
+  padding: 20px;
+  text-align: center;
+  transition: transform 0.3s, box-shadow 0.3s;
+  width: 24%; /* Taille des produits */
+  max-width: 300px; /* Taille maximale du produit */
+  box-sizing: border-box;
+  margin-top: 50px; /* Abaisse les produits davantage pour les centrer verticalement */
+}
+
+.product img {
+  width: 100%;
+  height: auto;
+  margin-bottom: 15px;
+}
+
+.product .price {
+  font-family: 'Orbitron', sans-serif;
+  font-size: 1.5rem; /* Augmenter la taille du prix */
+  color: #000000;
+  margin-bottom: 5px;
+  font-weight: 700; /* Prix en gras */
+}
+
+.product .name {
+  font-family: 'Orbitron', sans-serif;
+  font-size: 1.2rem; /* Augmenter la taille du nom du produit */
+  color: #333333;
+  font-weight: 300;
+}
+
+.product:hover {
+  transform: scale(1.05);
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.5);
+}
+
+/* Positionnement des textes en bas à gauche */
+.section-a-bottom-left,
+.section-b-bottom-left,
+.section-c-bottom-left,
+.section-d-bottom-left {
+  position: absolute;
+  bottom: 30px;
+  left: 30px;
+  text-align: left;
+  color: #fff;
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5), 0 0 25px rgba(0, 0, 255, 0.7);
+}
+
+.section-a-bottom-left h1,
+.section-b-bottom-left h1,
+.section-c-bottom-left h1,
+.section-d-bottom-left h1 {
+  font-size: 2rem;
+  margin-bottom: 10px;
+}
+
+.section-a-bottom-left h2,
+.section-b-bottom-left h2,
+.section-c-bottom-left h2,
+.section-d-bottom-left h2 {
+  font-size: 2.5rem;
+}
+
+/* Footer */
+.main-footer {
+  background-color: #222;
+  border-top: 2px solid gray;
+  padding: 40px 20px;
+  text-align: center;
+  position: relative;
+  bottom: 0;
+  width: 100%;
+}
+
+.footer-content {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.social-container {
+  background-color: #444;
+  padding: 20px;
+  border-radius: 5px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.footer-text {
+  margin-bottom: 10px;
+  color: #fff;
+}
+
+.social-links {
+  display: flex;
+  justify-content: center;
+}
+
+.social-links a {
+  margin: 0 10px;
+  color: #612ead;
+  text-decoration: none;
+}
+
+.social-links a:hover {
+  text-decoration: underline;
+}
