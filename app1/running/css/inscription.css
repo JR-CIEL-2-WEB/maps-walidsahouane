@@ -1,0 +1,138 @@
+@import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&display=swap'); /* Importation de la police Orbitron */
+
+body {
+  font-family: 'Orbitron', sans-serif;
+  background: url('../img/imginscriptionconnexion.jpg') no-repeat center / cover;
+  color: #ffffff;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+}
+
+/* Conteneur du formulaire */
+.form-container {
+  width: 90%;
+  max-width: 600px;
+  margin: 40px auto;
+  padding: 30px;
+  background-color: white; /* Formulaire en fond blanc */
+  box-shadow: 0 6px 15px rgba(33, 150, 243, 0.3); /* Ombre bleue autour du formulaire */
+  border-radius: 12px;
+  backdrop-filter: blur(10px); /* Effet de flou de fond */
+}
+
+/* Titre du formulaire */
+.form-container h2 {
+  font-size: 1.8rem;
+  font-weight: bold;
+  color: #333;
+  margin-bottom: 20px;
+  text-align: center;
+}
+
+/* Formulaire */
+form {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+/* Label */
+label {
+  font-size: 1rem;
+  font-weight: bold;
+  color: #333; /* Couleur sombre pour les labels */
+  margin-bottom: 5px;
+}
+
+/* Champs de saisie (input et textarea) */
+input, textarea {
+  padding: 12px;
+  font-size: 1rem;
+  border: 1px solid #ccc; /* Bordure gris clair pour les champs */
+  border-radius: 6px;
+  outline: none;
+  transition: border-color 0.3s ease, box-shadow 0.3s ease;
+  color: #000; /* Couleur du texte à l'intérieur des champs en noir */
+  background-color: #fff; /* Fond des champs en blanc */
+}
+
+/* Assurez-vous que ces styles s'appliquent spécifiquement aux champs de saisie */
+input[type="text"], input[type="email"], input[type="password"], input[name="nom"], input[name="prénom"], input[name="email"], input[name="telephone"], input[name="motdepasse"], input[name="confirm_motdepasse"] {
+  background-color: #fff;
+  color: #000;
+  border: 1px solid #ccc;
+  box-shadow: 0 0 10px rgba(33, 150, 243, 0.5); /* Ombre bleue */
+}
+
+/* Effet bleu pour les champs au focus */
+input:focus, textarea:focus {
+  border-color: #2196F3; /* Bordure bleue lors du focus */
+  box-shadow: 0 0 10px rgba(33, 150, 243, 0.7); /* Ombre bleue accentuée */
+}
+
+/* Champ de texte (textarea) spécifique */
+textarea {
+  resize: vertical;
+  min-height: 100px;
+}
+
+/* Bouton */
+button {
+  padding: 12px 20px;
+  background-color: #2100f4; /* Couleur bleue vif */
+  color: white;
+  border: none;
+  border-radius: 6px;
+  font-size: 1.1rem;
+  cursor: pointer;
+  transition: background-color 0.3s ease, transform 0.3s ease;
+  text-align: center;
+  margin-top: 20px;
+}
+
+button:hover {
+  background-color: #3d0f9a; /* Couleur bleue plus foncée */
+  transform: translateY(-2px); /* Effet de survol */
+}
+
+button:active {
+  background-color: #1c0a59; /* Couleur bleue encore plus foncée */
+  transform: translateY(0);
+}
+
+/* Footer */
+footer {
+  text-align: center;
+  padding: 20px;
+  background-color: #222;
+  color: white;
+  position: fixed;
+  bottom: 0;
+  width: 100%;
+}
+
+footer p {
+  font-size: 0.9rem;
+  margin: 0;
+}
+
+/* Responsivité pour les petits écrans */
+@media (max-width: 768px) {
+  body {
+      padding: 10px;
+  }
+
+  .form-container {
+      width: 95%;
+      padding: 20px;
+  }
+
+  h1 {
+      font-size: 2rem;
+  }
+}

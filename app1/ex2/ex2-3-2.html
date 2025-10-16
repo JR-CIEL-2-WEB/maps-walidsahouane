@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>JRostand stade reperes - Fetch</title>
+    <link rel="stylesheet" type="text/css" href="./style.css" />
+    <style>
+        /* Pour que la map occupe tout l'écran */
+        #map {
+            height: 100%;
+        }
+        html, body {
+            height: 100%;
+            margin: 0;
+            padding: 0;
+        }
+    </style>
+</head>
+<body>
+
+<h1>JRostand Reperes Stade - Fetch</h1>
+<hr>
+<div id="map">...</div>
+
+<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyA7Y32T_PJHZxYcK3BJYJFNwSl6cuvLXpo"></script>
+<script>
+    var markers;
+
+    // au chargement de la page
+    window.onload = loadDoc;
+
+    function loadDoc() {
+        fetch("markersJrostand.json")
+        .then(response => response.json())
+        .then(dataMarkers => {
+            markers = dataMarkers;
+
+            // Affichage console pour vérification
+            for(let i = 0; i < markers.length; i++){
+                let marker = markers[i];
+                for(key in marker){
+                    console.log(key + ":" + marker[key]);
+                }
+                console.log("____________");
+            }
+
+            initMap();
+        })
+        .catch(error => console.error("Erreur lors du fetch :", error));
+    }
+
+    function initMap(){
+       var options = {
+           center: new google.maps.LatLng(48.95930033308523, 2.5477890651742516),
+           zoom: 15,
+           mapTypeId: google.maps.MapTypeId.ROADMAP
+       };
+
+       var map = new google.maps.Map(document.getElementById("map"), options);
+
+       var path = []; // tableau pour polyline
+
+       // On positionne les marqueurs sur la carte
+       for (let i = 0; i < markers.length; i++) {
+           let latlng = markers[i];
+           let point = new google.maps.LatLng(latlng.lat, latlng.lng);
+           path.push(point); // ajout pour polyline
+
+           new google.maps.Marker({
+               position: point,
+               map : map,
+               title: 'Marqueur ' + (i+1)
+           });
+       }
+
+       // Création de la polyline pour relier tous les markers
+       if (path.length > 1) {
+           var parcours = new google.maps.Polyline({
+               path: path,
+               geodesic: true,
+               strokeColor: '#FF0000',
+               strokeOpacity: 1.0,
+               strokeWeight: 2
+           });
+           parcours.setMap(map);
+       }
+    }
+</script>
+
+</body>
+</html>

@@ -1,0 +1,138 @@
+<!DOCTYPE html> 
+<html lang="fr">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Carte des parcours réalistes</title>
+<style>
+    html, body { height: 100%; margin: 0; padding: 0; font-family: initial; }
+    h1 {
+        font-weight: normal;
+        text-align: left;
+        margin: 15px 20px;
+        color: black;
+        font-size: 28px;
+        position: absolute;
+        z-index: 10;
+        background-color: #fff;
+        padding: 5px 10px;
+        border-radius: 4px;
+    }
+    #map { height: 100%; width: 100%; }
+    #parcours-select {
+        position: absolute;
+        top: 60px;
+        left: 20px;
+        z-index: 10;
+        padding: 5px 10px;
+        font-size: 16px;
+    }
+</style>
+</head>
+<body>
+
+<h1>Carte des parcours réalistes</h1>
+<select id="parcours-select">
+    <option value="1">Parcours 1 : La Courneuve</option>
+    <option value="2">Parcours 2 : Le Bourget</option>
+    <option value="3">Parcours 3 : Canal de l'Ourcq</option>
+    <option value="4">Parcours 4 : Villepinte</option>
+</select>
+
+<div id="map"></div>
+
+<script>
+let map;
+let markers = [];
+let polyline = null;
+
+// Coordonnées pour parcours réalistes (suivant routes et chemins)
+const parcoursData = {
+    1: [ // La Courneuve - parcours mixte routes / chemins (environ 3km)
+        {lat: 48.9368, lng: 2.4145, name: "Départ - Parc de La Courneuve"},
+        {lat: 48.9390, lng: 2.4175, name: "Point intermédiaire 1"},
+        {lat: 48.9405, lng: 2.4210, name: "Point intermédiaire 2"},
+        {lat: 48.9385, lng: 2.4235, name: "Point intermédiaire 3"},
+        {lat: 48.9360, lng: 2.4215, name: "Arrivée - Stade Roger Groult"}
+    ],
+    2: [ // Le Bourget - parcours en zigzag dans la ville (environ 3.2km)
+        {lat: 48.9570, lng: 2.4555, name: "Départ - Gare du Bourget"},
+        {lat: 48.9580, lng: 2.4580, name: "Point intermédiaire 1"},
+        {lat: 48.9565, lng: 2.4600, name: "Point intermédiaire 2"},
+        {lat: 48.9585, lng: 2.4625, name: "Point intermédiaire 3"},
+        {lat: 48.9570, lng: 2.4640, name: "Arrivée - Parc départemental du Bourget"}
+    ],
+    3: [ // Canal de l'Ourcq - le long du canal entre Bondy et Sevran (~4km) [coordonnées affinées]
+        {lat: 48.9006, lng: 2.5355, name: "Départ - Bondy"},
+        {lat: 48.9032, lng: 2.5362, name: "Point intermédiaire 1"},
+        {lat: 48.9060, lng: 2.5368, name: "Point intermédiaire 2"},
+        {lat: 48.9088, lng: 2.5372, name: "Point intermédiaire 3"},
+        {lat: 48.9116, lng: 2.5376, name: "Point intermédiaire 4"},
+        {lat: 48.9143, lng: 2.5380, name: "Arrivée - Sevran"}
+    ],
+    4: [ // Villepinte - parcours en L, chemins piétons (environ 3.5km)
+        {lat: 48.9495, lng: 2.5595, name: "Départ - Parc de Villepinte"},
+        {lat: 48.9495, lng: 2.5645, name: "Point intermédiaire 1"},
+        {lat: 48.9525, lng: 2.5645, name: "Point intermédiaire 2"},
+        {lat: 48.9525, lng: 2.5670, name: "Point intermédiaire 3"},
+        {lat: 48.9540, lng: 2.5670, name: "Arrivée - Stade municipal"}
+    ]
+};
+
+function clearMap() {
+    markers.forEach(m => m.setMap(null));
+    markers = [];
+    if(polyline) polyline.setMap(null);
+}
+
+function showParcours(parcoursId) {
+    clearMap();
+    const points = parcoursData[parcoursId];
+    const bounds = new google.maps.LatLngBounds();
+    const path = [];
+
+    points.forEach(p => {
+        const marker = new google.maps.Marker({
+            position: {lat: p.lat, lng: p.lng},
+            map: map,
+            title: p.name
+        });
+        markers.push(marker);
+        path.push({lat: p.lat, lng: p.lng});
+        bounds.extend({lat: p.lat, lng: p.lng});
+    });
+
+    polyline = new google.maps.Polyline({
+        path: path,
+        geodesic: true,
+        strokeColor: "#FF0000",
+        strokeOpacity: 1.0,
+        strokeWeight: 4
+    });
+    polyline.setMap(map);
+
+    map.fitBounds(bounds);
+}
+
+function initMap() {
+    map = new google.maps.Map(document.getElementById("map"), {
+        center: {lat:48.94, lng:2.48}, // centre général
+        zoom: 12,
+        mapTypeId: 'roadmap'
+    });
+
+    // Affiche le parcours 1 par défaut
+    showParcours(1);
+
+    document.getElementById("parcours-select").addEventListener("change", (e) => {
+        showParcours(e.target.value);
+    });
+}
+</script>
+
+<script async
+    src="https://maps.googleapis.com/maps/api/js?key=AIzaSyA7Y32T_PJHZxYcK3BJYJFNwSl6cuvLXpo&callback=initMap">
+</script>
+
+</body>
+</html>

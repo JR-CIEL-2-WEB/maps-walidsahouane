@@ -1,61 +1,68 @@
 <!DOCTYPE html>
-<html>
-
+<html lang="fr">
 <head>
-    <meta charset="utf-8">
-    <title>JRostand stade reperes</title>
-    <link rel="stylesheet" type="text/css" href="./style.css" />
+  <meta charset="UTF-8">
+  <title>JRostand Stade Repères</title>
+  <link rel="stylesheet" type="text/css" href="./style.css" />
+  <style>
+    #map {
+      height: 500px;
+      width: 100%;
+    }
+  </style>
 </head>
-
 <body>
 
-    <h1>JRostand Reperes Stade</h1>
-    <hr>
-    <div id="map">...</div>
+  <h1>JRostand Repères Stade</h1>
+  <hr>
+  <div id="map"></div>
 
-    <script
-        src="https://maps.googleapis.com/maps/api/js?key=AIzaSyA7Y32T_PJHZxYcK3BJYJFNwSl6cuvLXpo&callback=loadDoc&v=weekly" defer   ></script>
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-    <script>
+  <!-- API Google Maps -->
+  <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyA7Y32T_PJHZxYcK3BJYJFNwSl6cuvLXpo&callback=loadDoc&v=weekly" defer></script>
+  <!-- jQuery -->
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 
-       
-        
-        
-        var markers;
+  <script>
+    let map;
 
-        // when page is API google maps is complete, process for the map!
-        // Ajax avec JQuery
     function loadDoc() {
-        $.ajax({
-                url: // TODO1,
-                method: // TODO2,
-                dataType: // TODO3,
-                success: function(markers){
-                    // TODO4 :
-                            /* markers representera un objet JSON retourné par le serveur */
-                            /*
-                                compléter le code de la fonction afin d'afficher les chaque coordonnée  à la console
-                            */
+      $.ajax({
+        url: 'markersJrostand.json',
+        method: 'GET',
+        dataType: 'json',
+        success: function (markers) {
+          map = new google.maps.Map(document.getElementById("map"), {
+            zoom: 16,
+            center: { lat: 48.9605, lng: 2.5480 }
+          });
 
-                            /*
-                                vous utiliserez deux boucles for
-                                - boucle for classique sur markers
-                                - boucle for in sur marker
-                             */
+          markers.forEach((markerData, index) => {
+            const position = { lat: markerData.lat, lng: markerData.lng };
 
-                            /*
-                                Créer des markers Google avec l'API Google Maps en utilisant l'objet renvoyé par
-                                le serveur web. Afficher votre map.
-                             */
-                    // fin  TODO4
-                        }
-            }
-        );
-    };
+            const marker = new google.maps.Marker({
+              position: position,
+              map: map,
+              title: `Repère ${index + 1}`
+            });
 
-    </script>
-
+            // Alerte personnalisée simple
+            marker.addListener('click', () => {
+              if (index === 0) {
+                alert("Stade Jean Rostand\nTerrain de sport du lycée.");
+              } else if (index === 3) {
+                alert("Parc des Sports\nEspace dédié aux activités sportives.");
+              } else {
+                alert(`Vous avez cliqué sur le repère ${index + 1}.`);
+              }
+            });
+          });
+        },
+        error: function (err) {
+          console.error("Erreur lors du chargement des marqueurs :", err);
+        }
+      });
+    }
+  </script>
 
 </body>
-
 </html>
